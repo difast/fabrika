@@ -197,9 +197,13 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       <label className="flex items-start gap-3 text-sm text-muted">
         <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 accent-violet" />
         <span>
-          Я согласен(а) на обработку персональных данных в соответствии с{" "}
+          Я даю{" "}
+          <a href="/consent" target="_blank" className="text-violet underline hover:text-cyan">
+            согласие на обработку персональных данных
+          </a>{" "}
+          и принимаю{" "}
           <a href="/privacy" target="_blank" className="text-violet underline hover:text-cyan">
-            политикой обработки персональных данных
+            политику обработки персональных данных
           </a>
           .
         </span>

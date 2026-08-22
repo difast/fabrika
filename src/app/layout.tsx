@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
-import { site, contacts, faq } from "@/config/site";
+import { site, contacts, company, faq } from "@/config/site";
 import { LeadProvider } from "@/components/lead/LeadContext";
 import { LeadModal } from "@/components/lead/LeadModal";
 import "./globals.css";
@@ -65,11 +65,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         "@type": "EducationalOrganization",
         "@id": `${site.url}/#organization`,
         name: site.name,
-        legalName: site.legalName,
+        legalName: company.legalName,
         url: site.url,
         description: site.description,
-        telephone: contacts.phoneRaw,
-        email: contacts.email,
+        email: company.email,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: company.address,
+          addressCountry: "RU",
+        },
         sameAs: [tgHref, `https://wa.me/${contacts.whatsappRaw}`],
         areaServed: "RU",
         knowsAbout: [

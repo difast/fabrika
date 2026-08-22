@@ -15,6 +15,7 @@ const footerNav = [
   { label: "О школе", href: "/#about" },
   { label: "FAQ", href: "/#faq" },
   { label: "Политика обработки данных", href: "/privacy" },
+  { label: "Согласие на обработку данных", href: "/consent" },
 ];
 
 export function Footer() {

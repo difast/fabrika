@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site, contacts } from "@/config/site";
+import { site, company } from "@/config/site";
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { Icon } from "@/components/Icon";
 
 export const metadata: Metadata = {
   title: "Политика обработки персональных данных",
-  description: `Политика обработки персональных данных оператора ${site.legalName} (${site.name}).`,
+  description: `Политика обработки персональных данных оператора ${company.legalName} (${site.name}).`,
   alternates: { canonical: "/privacy" },
   robots: { index: true, follow: true },
 };
-
-const tgHref = contacts.telegram.startsWith("http")
-  ? contacts.telegram
-  : `https://t.me/${contacts.telegram.replace("@", "")}`;
 
 function Section({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
@@ -51,10 +47,20 @@ export default function PrivacyPage() {
             <span className="text-gradient">персональных данных</span>
           </h1>
           <p className="mt-4 text-muted">
-            Оператор персональных данных: <strong className="text-fg">{site.legalName}</strong> (далее —
+            Оператор персональных данных: <strong className="text-fg">{company.legalName}</strong> (далее —
             «Оператор»), обеспечивающий работу сайта онлайн-школы «{site.name}».
           </p>
-          <p className="mt-1 text-sm text-muted">Дата последнего обновления: {updated}</p>
+          <p className="mt-2 text-sm text-muted">
+            ОГРН {company.ogrn} · ИНН {company.inn}
+            <br />
+            Адрес: {company.address}
+            <br />
+            E-mail:{" "}
+            <a href={`mailto:${company.email}`} className="text-violet hover:text-cyan">
+              {company.email}
+            </a>
+          </p>
+          <p className="mt-2 text-sm text-muted">Дата последнего обновления: {updated}</p>
 
           <div className="mt-6 rounded-2xl border border-border bg-surface/60 p-5 text-sm text-muted">
             Настоящая Политика определяет порядок обработки и защиты персональных данных
@@ -195,24 +201,21 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-none space-y-2 pl-0">
               <li>
-                <strong className="text-fg">Оператор:</strong> {site.legalName}
+                <strong className="text-fg">Оператор:</strong> {company.legalName}
               </li>
               <li>
-                <strong className="text-fg">Телефон:</strong>{" "}
-                <a href={`tel:${contacts.phoneRaw}`} className="text-violet hover:text-cyan">
-                  {contacts.phoneDisplay}
-                </a>
+                <strong className="text-fg">ОГРН:</strong> {company.ogrn}
+              </li>
+              <li>
+                <strong className="text-fg">ИНН:</strong> {company.inn}
+              </li>
+              <li>
+                <strong className="text-fg">Адрес:</strong> {company.address}
               </li>
               <li>
                 <strong className="text-fg">E-mail:</strong>{" "}
-                <a href={`mailto:${contacts.email}`} className="text-violet hover:text-cyan">
-                  {contacts.email}
-                </a>
-              </li>
-              <li>
-                <strong className="text-fg">Telegram:</strong>{" "}
-                <a href={tgHref} target="_blank" rel="noopener noreferrer" className="text-violet hover:text-cyan">
-                  {contacts.telegramDisplay}
+                <a href={`mailto:${company.email}`} className="text-violet hover:text-cyan">
+                  {company.email}
                 </a>
               </li>
             </ul>
