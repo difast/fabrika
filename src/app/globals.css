@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────
+   ТЕМА «ТехФабрика» — тёмный техно-EdTech стиль
+   ────────────────────────────────────────────── */
+@theme {
+  --color-bg: #07070d;
+  --color-bg-soft: #0d0d18;
+  --color-surface: #12121f;
+  --color-border: #23233a;
+  --color-fg: #f3f4fb;
+  --color-muted: #a2a3c0;
+
+  --color-violet: #7c5cff;
+  --color-violet-600: #6a45f5;
+  --color-cyan: #22d3ee;
+  --color-lime: #a3e635;
+  --color-pink: #f472d0;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-manrope), var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+
+  --radius-4xl: 2rem;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: white;
+}
+
+/* Скрытие полосы прокрутки для горизонтальных мобильных лент */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Градиентный текст */
+.text-gradient {
+  background: linear-gradient(100deg, var(--color-violet) 0%, var(--color-cyan) 55%, var(--color-lime) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Фоновая сетка */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(124, 92, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 92, 255, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Стеклянные карточки */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Свечение */
+.glow-violet {
+  box-shadow: 0 0 60px -12px rgba(124, 92, 255, 0.55);
+}
+
+/* ── Анимации появления при прокрутке ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .float,
+  .blob {
+    animation: none !important;
+  }
+}
+
+/* Плавающие декоративные объекты */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.94);
+  }
+}
+.blob {
+  animation: blob 18s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+/* Мигающий курсор в hero-коде */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: blink 1.1s step-end infinite;
+}
