@@ -31,6 +31,18 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
   const phoneDigits = phone.replace(/\D/g, "");
   const canSubmit = name.trim().length >= 2 && phoneDigits.length >= 10 && agreed;
 
+  // Понятная подсказка: чего именно не хватает для отправки
+  const missing: string[] = [];
+  if (name.trim().length < 2) missing.push("имя");
+  if (phoneDigits.length < 10) missing.push("телефон");
+  const hint = !agreed
+    ? missing.length
+      ? `Заполните ${missing.join(" и ")} и отметьте согласие на обработку данных`
+      : "Отметьте галочку согласия, чтобы отправить заявку"
+    : missing.length
+      ? `Заполните ${missing.join(" и ")}`
+      : "";
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "loading") return;
@@ -255,7 +267,7 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
           <a href="/privacy" target="_blank" className="text-violet underline hover:text-cyan">
             политику обработки персональных данных
           </a>
-          .
+          . <span className={consentError ? "font-semibold" : "text-muted/70"}>*</span>
         </span>
       </label>
 
@@ -276,6 +288,13 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
           <Icon name="arrow" size={18} className="transition-transform group-hover:translate-x-1" />
         )}
       </button>
+
+      {status !== "loading" && !canSubmit && hint && (
+        <p className="-mt-1 flex items-center justify-center gap-1.5 text-center text-xs text-muted">
+          <Icon name="shield" size={13} className="text-violet" />
+          {hint}
+        </p>
+      )}
     </form>
   );
 }

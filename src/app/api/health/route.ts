@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
  */
 /** Маркер версии — меняется с каждым деплоем. Проверяйте /api/health,
  *  чтобы точно знать, какая версия сейчас развёрнута на сервере. */
-const APP_VERSION = "2026-08-23-honeypot-fix-strict-form";
+const APP_VERSION = "2026-08-23-consent-hint";
 
 export function GET() {
   return NextResponse.json(
