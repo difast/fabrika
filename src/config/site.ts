@@ -10,17 +10,21 @@
 /* ─────────────────────────  КОНТАКТЫ  ───────────────────────── */
 export const contacts = {
   /** Телефон в международном формате для набора (без пробелов) */
-  phoneRaw: "+79000000000",
+  phoneRaw: "+79916230518",
   /** Телефон в красивом виде для показа на сайте */
-  phoneDisplay: "+7 (900) 000-00-00",
+  phoneDisplay: "+7 991 623 05 18",
 
-  /** Username или полная ссылка на Telegram */
-  telegram: "https://t.me/techfabrika",
-  telegramDisplay: "@techfabrika",
+  /** Личный Telegram для сообщений (username или полная ссылка) */
+  telegram: "https://t.me/tech_fabrika",
+  telegramDisplay: "@tech_fabrika",
+
+  /** Telegram-канал школы (ссылка) */
+  telegramChannel: "https://t.me/tech_fabrik",
+  telegramChannelDisplay: "@tech_fabrik",
 
   /** Номер WhatsApp в международном формате (только цифры) */
-  whatsappRaw: "79000000000",
-  whatsappDisplay: "+7 (900) 000-00-00",
+  whatsappRaw: "79916230518",
+  whatsappDisplay: "+7 991 623 05 18",
 
   /** E-mail оператора (используется в документах и Schema.org) */
   email: "ceo@oneononehq.com",

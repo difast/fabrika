@@ -4,6 +4,7 @@ import { site, contacts, company, faq } from "@/config/site";
 import { LeadProvider } from "@/components/lead/LeadContext";
 import { LeadModal } from "@/components/lead/LeadModal";
 import { CookieBanner } from "@/components/CookieBanner";
+import { ChannelPromo } from "@/components/ChannelPromo";
 import "./globals.css";
 
 const display = Manrope({ subsets: ["latin", "cyrillic"], variable: "--font-manrope", weight: ["600", "700", "800"] });
@@ -75,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           streetAddress: company.address,
           addressCountry: "RU",
         },
-        sameAs: [tgHref, `https://wa.me/${contacts.whatsappRaw}`],
+        sameAs: [tgHref, contacts.telegramChannel, `https://wa.me/${contacts.whatsappRaw}`],
         areaServed: "RU",
         knowsAbout: [
           "Программирование для детей",
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <LeadModal />
         </LeadProvider>
         <CookieBanner />
+        <ChannelPromo />
       </body>
     </html>
   );

@@ -43,6 +43,10 @@ export function Footer() {
                   <Icon name="telegram" size={16} className="text-cyan" />
                   {contacts.telegramDisplay}
                 </a>
+                <a href={contacts.telegramChannel} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-muted transition hover:text-fg">
+                  <Icon name="telegram" size={16} className="text-violet" />
+                  Telegram-канал {contacts.telegramChannelDisplay}
+                </a>
                 <a href={`https://wa.me/${contacts.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-muted transition hover:text-fg">
                   <Icon name="whatsapp" size={16} className="text-lime" />
                   {contacts.whatsappDisplay}
