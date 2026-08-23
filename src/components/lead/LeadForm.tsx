@@ -23,6 +23,13 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [consentError, setConsentError] = useState(false);
+  // Жёсткие условия: кнопка активна только при заполненных имени, телефоне и галочке
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [agreed, setAgreed] = useState(false);
+
+  const phoneDigits = phone.replace(/\D/g, "");
+  const canSubmit = name.trim().length >= 2 && phoneDigits.length >= 10 && agreed;
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,31 +38,37 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // Простая защита от спама: honeypot должен быть пустым
-    if ((data.get("company") as string)?.trim()) {
-      setStatus("success"); // тихо игнорируем бота
+    // Honeypot: скрытое поле с необычным именем, которое автозаполнение не трогает.
+    // Если оно заполнено — это бот.
+    if ((data.get("website_hp") as string)?.trim()) {
+      setStatus("success");
       form.reset();
       return;
     }
 
     const payload = {
-      name: (data.get("name") as string)?.trim(),
-      phone: (data.get("phone") as string)?.trim(),
+      name: name.trim(),
+      phone: phone.trim(),
       contact: (data.get("contact") as string)?.trim(),
       childAge: (data.get("childAge") as string)?.trim(),
       program: (data.get("program") as string)?.trim(),
       tariff: (data.get("tariff") as string)?.trim() || presetTariff || "",
       comment: (data.get("comment") as string)?.trim(),
-      consent: data.get("consent") === "on",
+      consent: agreed,
       page: typeof window !== "undefined" ? window.location.href : "",
     };
 
-    if (!payload.name || !payload.phone) {
+    // Жёсткая валидация перед отправкой
+    if (payload.name.length < 2) {
       setStatus("error");
-      setErrorMsg("Пожалуйста, укажите имя и телефон.");
+      setErrorMsg("Пожалуйста, укажите имя.");
       return;
     }
-    // Проверка галочки согласия перед отправкой
+    if (payload.phone.replace(/\D/g, "").length < 10) {
+      setStatus("error");
+      setErrorMsg("Пожалуйста, укажите корректный номер телефона (не менее 10 цифр).");
+      return;
+    }
     if (!payload.consent) {
       setStatus("error");
       setConsentError(true);
@@ -80,6 +93,9 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       }
       setStatus("success");
       form.reset();
+      setName("");
+      setPhone("");
+      setAgreed(false);
     } catch (err) {
       setStatus("error");
       setErrorMsg(
@@ -127,7 +143,15 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col gap-1.5">
           <span className="text-sm font-medium text-muted">Имя родителя *</span>
-          <input name="name" required autoComplete="name" placeholder="Как к вам обращаться" className={inputCls} />
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Как к вам обращаться"
+            className={inputCls}
+          />
         </label>
         <label className="flex flex-col gap-1.5">
           <span className="text-sm font-medium text-muted">Телефон *</span>
@@ -137,6 +161,8 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
             type="tel"
             inputMode="tel"
             autoComplete="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             placeholder="+7 (___) ___-__-__"
             className={inputCls}
           />
@@ -191,11 +217,12 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
         </label>
       )}
 
-      {/* Honeypot для защиты от спам-ботов — скрыт от людей */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
+      {/* Honeypot для защиты от спам-ботов — скрыт от людей.
+          Имя поля намеренно необычное, чтобы автозаполнение браузера его не трогало. */}
+      <div className="absolute left-[-9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
         <label>
           Не заполняйте это поле
-          <input name="company" tabIndex={-1} autoComplete="off" />
+          <input name="website_hp" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
 
@@ -208,7 +235,9 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
           name="consent"
           type="checkbox"
           required
+          checked={agreed}
           onChange={(e) => {
+            setAgreed(e.target.checked);
             if (e.target.checked && consentError) {
               setConsentError(false);
               setStatus("idle");
@@ -238,8 +267,9 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
 
       <button
         type="submit"
-        disabled={status === "loading"}
-        className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 font-semibold text-white shadow-lg shadow-violet/25 transition hover:shadow-violet/40 disabled:opacity-60"
+        disabled={status === "loading" || !canSubmit}
+        title={!canSubmit ? "Заполните имя, телефон и поставьте галочку согласия" : undefined}
+        className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet to-cyan px-6 py-3.5 font-semibold text-white shadow-lg shadow-violet/25 transition hover:shadow-violet/40 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "loading" ? "Отправляем…" : "Отправить заявку"}
         {status !== "loading" && (
