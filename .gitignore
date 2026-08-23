@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# stray test artifacts
+/undefined/
+*.png
+!public/**/*.png
+!src/**/*.png
