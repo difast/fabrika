@@ -1,4 +1,14 @@
 import { NextResponse } from "next/server";
+import dns from "node:dns";
+
+// Многие серверы (в т.ч. в РФ дата-центрах) не имеют IPv6-маршрута наружу.
+// Node по умолчанию может пытаться сначала IPv6 → запрос к api.telegram.org
+// зависает и падает по таймауту. Принудительно используем сначала IPv4.
+try {
+  dns.setDefaultResultOrder("ipv4first");
+} catch {
+  /* старые версии Node — игнорируем */
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -117,35 +127,53 @@ export async function POST(req: Request) {
     page ? `🔗 <b>Страница:</b> ${esc(page)}` : "",
   ].filter(Boolean);
 
-  try {
-    const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: lines.join("\n"),
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }),
-      // не даём запросу висеть слишком долго
-      signal: AbortSignal.timeout(10_000),
-    });
+  const tgBody = JSON.stringify({
+    chat_id: chatId,
+    text: lines.join("\n"),
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+  });
 
-    if (!tgRes.ok) {
+  const attempts = 2;
+  let lastError = "";
+
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: tgBody,
+        signal: AbortSignal.timeout(20_000),
+      });
+
+      if (tgRes.ok) {
+        return NextResponse.json({ ok: true });
+      }
+
+      // Telegram ответил, но с ошибкой (неверный chat_id, бот заблокирован и т.п.)
       const detail = await tgRes.text().catch(() => "");
       console.error("[lead] Ошибка Telegram API:", tgRes.status, detail);
       return NextResponse.json(
-        { ok: false, error: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам." },
+        {
+          ok: false,
+          error: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+          detail: `telegram ${tgRes.status}: ${detail.slice(0, 300)}`,
+        },
         { status: 502 },
       );
+    } catch (err) {
+      // Сетевой сбой/таймаут при обращении к api.telegram.org — пробуем ещё раз
+      lastError = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+      console.error(`[lead] Сбой при отправке в Telegram (попытка ${i}/${attempts}):`, lastError);
     }
-
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("[lead] Сбой при отправке в Telegram:", err);
-    return NextResponse.json(
-      { ok: false, error: "Не удалось отправить заявку. Проверьте соединение и попробуйте снова." },
-      { status: 500 },
-    );
   }
+
+  return NextResponse.json(
+    {
+      ok: false,
+      error: "Не удалось отправить заявку. Проверьте соединение и попробуйте снова.",
+      detail: `network: ${lastError}`,
+    },
+    { status: 500 },
+  );
 }

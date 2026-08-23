@@ -75,7 +75,8 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok || !json.ok) {
-        throw new Error(json.error || "Не удалось отправить заявку");
+        const base = json.error || "Не удалось отправить заявку";
+        throw new Error(json.detail ? `${base}\n(${json.detail})` : base);
       }
       setStatus("success");
       form.reset();
@@ -230,7 +231,7 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       </label>
 
       {status === "error" && (
-        <p className="rounded-xl border border-pink/40 bg-pink/10 px-4 py-3 text-sm text-pink">
+        <p className="whitespace-pre-line rounded-xl border border-pink/40 bg-pink/10 px-4 py-3 text-sm text-pink">
           {errorMsg}
         </p>
       )}
