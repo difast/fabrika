@@ -3,6 +3,7 @@ import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
 import { site, contacts, company, faq } from "@/config/site";
 import { LeadProvider } from "@/components/lead/LeadContext";
 import { LeadModal } from "@/components/lead/LeadModal";
+import { CookieBanner } from "@/components/CookieBanner";
 import "./globals.css";
 
 const display = Manrope({ subsets: ["latin", "cyrillic"], variable: "--font-manrope", weight: ["600", "700", "800"] });
@@ -115,6 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <LeadModal />
         </LeadProvider>
+        <CookieBanner />
       </body>
     </html>
   );
