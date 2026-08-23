@@ -22,6 +22,7 @@ const tariffOptions = pricing.plans.map((p) => `${p.name} — ${p.tagline}`);
 export function LeadForm({ presetTariff, presetProgram, variant = "full", title, subtitle }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [consentError, setConsentError] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,11 +55,14 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
       setErrorMsg("Пожалуйста, укажите имя и телефон.");
       return;
     }
+    // Проверка галочки согласия перед отправкой
     if (!payload.consent) {
       setStatus("error");
-      setErrorMsg("Необходимо согласие на обработку персональных данных.");
+      setConsentError(true);
+      setErrorMsg("Пожалуйста, отметьте галочку согласия на обработку персональных данных.");
       return;
     }
+    setConsentError(false);
 
     setStatus("loading");
     setErrorMsg("");
@@ -194,8 +198,24 @@ export function LeadForm({ presetTariff, presetProgram, variant = "full", title,
         </label>
       </div>
 
-      <label className="flex items-start gap-3 text-sm text-muted">
-        <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 accent-violet" />
+      <label
+        className={`flex items-start gap-3 rounded-xl p-3 text-sm transition ${
+          consentError ? "border border-pink/50 bg-pink/10 text-pink" : "text-muted"
+        }`}
+      >
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          onChange={(e) => {
+            if (e.target.checked && consentError) {
+              setConsentError(false);
+              setStatus("idle");
+              setErrorMsg("");
+            }
+          }}
+          className="mt-1 h-4 w-4 accent-violet"
+        />
         <span>
           Я даю{" "}
           <a href="/consent" target="_blank" className="text-violet underline hover:text-cyan">
