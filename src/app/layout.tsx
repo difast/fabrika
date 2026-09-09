@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
-import { site, contacts, company, faq, founder, founderSameAs, projects } from "@/config/site";
+import { site, contacts, company, faq, founder, founderSameAs, projects, verification } from "@/config/site";
 import { LeadProvider } from "@/components/lead/LeadContext";
 import { LeadModal } from "@/components/lead/LeadModal";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -36,6 +36,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+  },
+  verification: {
+    ...(verification.yandex ? { yandex: verification.yandex } : {}),
+    ...(verification.google ? { google: verification.google } : {}),
   },
   robots: {
     index: true,
