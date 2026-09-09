@@ -56,7 +56,7 @@ export const founder = {
   alternateNames: ["Dmitry Pyatakov", "Пятаков Дмитрий", "Pyatakov Dmitry"],
   jobTitle: "Основатель",
   description:
-    "Дмитрий Пятаков (Dmitry Pyatakov) — предприниматель и основатель образовательных и технологических проектов: онлайн-школы программирования «ТехФабрика», школы шахмат Panteon Chess и компании Mevratek.",
+    "Дмитрий Пятаков (Dmitry Pyatakov) — предприниматель и основатель образовательных и технологических проектов: OneOnOne, онлайн-школы программирования «ТехФабрика», школы шахмат Panteon Chess и компании Mevratek.",
 
   /** Личные соцсети (идут в sameAs — так поисковики и ИИ связывают профили) */
   social: {
@@ -80,6 +80,15 @@ export const founderSameAs = [
  * Показываются в футере и передаются в JSON-LD (Person → owns / Organization).
  */
 export const projects = [
+  {
+    name: "OneOnOne",
+    nameEn: "OneOnOne",
+    // ВНИМАНИЕ: домен взят из корпоративной почты ceo@oneononehq.com — поправьте, если сайт другой
+    url: "https://oneononehq.com",
+    type: "Organization" as const,
+    tagline: "Индивидуальное онлайн-обучение",
+    description: "OneOnOne — проект индивидуального онлайн-обучения с персональным преподавателем.",
+  },
   {
     name: "ТехФабрика",
     nameEn: "TechFabrika",
@@ -131,6 +140,7 @@ export const site = {
     "Пятаков Дмитрий основатель",
     "Panteon Chess",
     "Mevratek",
+    "OneOnOne",
   ],
 };
 
