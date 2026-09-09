@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
-import { site, contacts, company, faq } from "@/config/site";
+import { site, contacts, company, faq, founder, founderSameAs, projects } from "@/config/site";
 import { LeadProvider } from "@/components/lead/LeadContext";
 import { LeadModal } from "@/components/lead/LeadModal";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: site.keywords,
-  authors: [{ name: site.name }],
+  authors: [{ name: founder.name, url: founder.social.telegram }, { name: site.name }],
+  creator: `${founder.name} (${founder.nameEn})`,
+  publisher: site.legalName,
   applicationName: site.name,
   alternates: { canonical: "/" },
   openGraph: {
@@ -76,7 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           streetAddress: company.address,
           addressCountry: "RU",
         },
+        // sameAs организации — только каналы школы; личные профили живут в узле Person ниже
         sameAs: [tgHref, contacts.telegramChannel, `https://wa.me/${contacts.whatsappRaw}`],
+        founder: { "@id": `${site.url}/#founder` },
         areaServed: "RU",
         knowsAbout: [
           "Программирование для детей",
@@ -84,6 +88,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           "Разработка сайтов",
           "Python",
           "Web-разработка",
+        ],
+      },
+      {
+        "@type": "Person",
+        "@id": `${site.url}/#founder`,
+        name: founder.name,
+        alternateName: founder.alternateNames,
+        jobTitle: founder.jobTitle,
+        description: founder.description,
+        url: site.url,
+        sameAs: founderSameAs,
+        worksFor: { "@id": `${site.url}/#organization` },
+        owns: projects.map((project) => ({
+          "@type": project.type,
+          name: project.name,
+          alternateName: project.nameEn,
+          url: project.url,
+          description: project.description,
+        })),
+        knowsAbout: [
+          "Программирование для детей",
+          "Онлайн-образование",
+          "Обучение шахматам",
+          "Технологические продукты",
         ],
       },
       {

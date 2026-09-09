@@ -18,6 +18,8 @@ type IconName =
   | "phone"
   | "telegram"
   | "whatsapp"
+  | "instagram"
+  | "youtube"
   | "check"
   | "arrow"
   | "menu"
@@ -119,6 +121,19 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <path d="M4 20l1.5-4A8 8 0 1 1 9 19.5z" />
       <path d="M9 9c0 3 3 6 6 6 1 0 1.5-.5 1.5-1.2 0-.3-1.5-1.3-1.9-1.3-.6 0-.7.8-1.1.8-.6 0-2.3-1.7-2.3-2.3 0-.4.8-.5.8-1.1 0-.4-1-1.9-1.3-1.9C9.5 7.5 9 8 9 9z" />
+    </>
+  ),
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  youtube: (
+    <>
+      <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
+      <path d="m10.5 9.5 5 2.5-5 2.5z" />
     </>
   ),
   check: <path d="m5 12 5 5L20 7" />,

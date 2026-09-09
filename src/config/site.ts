@@ -43,6 +43,71 @@ export const company = {
   email: "ceo@oneononehq.com",
 };
 
+/* ─────────────────────────  ОСНОВАТЕЛЬ (личный бренд, Schema.org Person)  ─────────────────────────
+ * Используется в JSON-LD (@type: Person), в футере и в /llms.txt.
+ * Здесь редактируются ФИО, транслитерация, личные соцсети и список проектов.
+ */
+export const founder = {
+  /** ФИО на русском */
+  name: "Дмитрий Пятаков",
+  /** Транслитерация (для англоязычного поиска и ИИ-моделей) */
+  nameEn: "Dmitry Pyatakov",
+  /** Альтернативные написания имени — помогают связать сущность в поиске */
+  alternateNames: ["Dmitry Pyatakov", "Пятаков Дмитрий", "Pyatakov Dmitry"],
+  jobTitle: "Основатель",
+  description:
+    "Дмитрий Пятаков (Dmitry Pyatakov) — предприниматель и основатель образовательных и технологических проектов: онлайн-школы программирования «ТехФабрика», школы шахмат Panteon Chess и компании Mevratek.",
+
+  /** Личные соцсети (идут в sameAs — так поисковики и ИИ связывают профили) */
+  social: {
+    instagram: "https://instagram.com/pyatakov.official",
+    instagramDisplay: "@pyatakov.official",
+    youtube: "https://youtube.com/@pyatakov.official",
+    youtubeDisplay: "@pyatakov.official",
+    telegram: "https://t.me/pyatakov_official",
+    telegramDisplay: "@pyatakov_official",
+  },
+};
+
+/** Ссылки на личные профили одним массивом — для sameAs в JSON-LD */
+export const founderSameAs = [
+  founder.social.instagram,
+  founder.social.youtube,
+  founder.social.telegram,
+];
+
+/* ─────────────────────────  ДРУГИЕ ПРОЕКТЫ ОСНОВАТЕЛЯ  ─────────────────────────
+ * Показываются в футере и передаются в JSON-LD (Person → owns / Organization).
+ */
+export const projects = [
+  {
+    name: "ТехФабрика",
+    nameEn: "TechFabrika",
+    url: "https://techfabrika.ru",
+    type: "EducationalOrganization" as const,
+    tagline: "Онлайн-школа программирования",
+    description:
+      "Онлайн-школа программирования для детей и школьников: индивидуальные занятия, создание игр, сайтов и Python.",
+  },
+  {
+    name: "Panteon Chess",
+    nameEn: "Panteon Chess",
+    url: "https://panteonchess.ru",
+    type: "EducationalOrganization" as const,
+    tagline: "Школа шахмат",
+    description:
+      "Школа шахмат Panteon Chess: обучение шахматам для детей и взрослых с персональным тренером.",
+  },
+  {
+    name: "Mevratek",
+    nameEn: "Mevratek",
+    url: "https://mevratek.ru",
+    type: "Organization" as const,
+    tagline: "Технологическая компания",
+    description: "Mevratek (Мевратек) — технологическая компания, разработка цифровых продуктов и сервисов.",
+  },
+];
+
 /* ─────────────────────────  БРЕНД / SEO  ───────────────────────── */
 export const site = {
   name: "ТехФабрика",
@@ -61,6 +126,11 @@ export const site = {
     "создание игр для детей",
     "python для детей",
     "разработка сайтов для детей",
+    "Дмитрий Пятаков",
+    "Dmitry Pyatakov",
+    "Пятаков Дмитрий основатель",
+    "Panteon Chess",
+    "Mevratek",
   ],
 };
 

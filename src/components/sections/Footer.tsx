@@ -1,4 +1,4 @@
-import { contacts, site } from "@/config/site";
+import { contacts, site, founder, projects } from "@/config/site";
 import { Icon } from "@/components/Icon";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/ui";
@@ -7,6 +7,12 @@ import { LeadForm } from "@/components/lead/LeadForm";
 const tgHref = contacts.telegram.startsWith("http")
   ? contacts.telegram
   : `https://t.me/${contacts.telegram.replace("@", "")}`;
+
+const founderSocial = [
+  { name: "instagram" as const, href: founder.social.instagram, label: `Instagram ${founder.social.instagramDisplay}`, color: "text-violet" },
+  { name: "youtube" as const, href: founder.social.youtube, label: `YouTube ${founder.social.youtubeDisplay}`, color: "text-cyan" },
+  { name: "telegram" as const, href: founder.social.telegram, label: `Telegram ${founder.social.telegramDisplay}`, color: "text-lime" },
+];
 
 const footerNav = [
   { label: "Обучение", href: "/#learn" },
@@ -74,7 +80,56 @@ export function Footer() {
           </Reveal>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted sm:flex-row">
+        {/* Основатель и другие проекты */}
+        <div className="mt-14 grid gap-10 border-t border-border pt-10 sm:grid-cols-2">
+          <div>
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-muted">Основатель</h4>
+            <p className="mt-4 font-display text-lg font-bold text-fg">
+              {founder.name} <span className="text-muted">({founder.nameEn})</span>
+            </p>
+            <p className="mt-2 max-w-sm text-sm text-muted">{founder.description}</p>
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              {founderSocial.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  className="flex items-center gap-2 rounded-lg border border-border bg-surface/60 px-3 py-2 text-sm text-muted transition hover:text-fg"
+                >
+                  <Icon name={item.name} size={16} className={item.color} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-muted">Проекты</h4>
+            <ul className="mt-4 flex flex-col gap-3.5">
+              {projects.map((project) => (
+                <li key={project.url}>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2.5 text-sm text-muted transition hover:text-fg"
+                  >
+                    <Icon name="globe" size={16} className="mt-0.5 shrink-0 text-violet" />
+                    <span>
+                      <span className="font-medium text-fg">{project.name}</span> — {project.tagline}
+                      <span className="ml-1.5 text-xs text-muted/80">
+                        {project.url.replace("https://", "")}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted sm:flex-row">
           <p>
             {site.legalName} · © {new Date().getFullYear()} {site.name}. Все права защищены.
           </p>
