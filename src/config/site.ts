@@ -150,7 +150,7 @@ export const nav = [
   { label: "Обучение", href: "/#learn" },
   { label: "Программы", href: "/#programs" },
   { label: "Цены", href: "/#pricing" },
-  { label: "О школе", href: "/#about" },
+  { label: "О школе", href: "/about" },
   { label: "FAQ", href: "/#faq" },
   { label: "Контакты", href: "/#contacts" },
 ];
