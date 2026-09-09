@@ -86,8 +86,8 @@ export const projects = [
     // ВНИМАНИЕ: домен взят из корпоративной почты ceo@oneononehq.com — поправьте, если сайт другой
     url: "https://oneononehq.com",
     type: "Organization" as const,
-    tagline: "Индивидуальное онлайн-обучение",
-    description: "OneOnOne — проект индивидуального онлайн-обучения с персональным преподавателем.",
+    tagline: "Управление командой",
+    description: "OneOnOne — проект в сфере управления командой.",
   },
   {
     name: "ТехФабрика",
