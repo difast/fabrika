@@ -20,6 +20,7 @@ type IconName =
   | "whatsapp"
   | "instagram"
   | "youtube"
+  | "rutube"
   | "check"
   | "arrow"
   | "menu"
@@ -134,6 +135,12 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
       <path d="m10.5 9.5 5 2.5-5 2.5z" />
+    </>
+  ),
+  rutube: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="4.5" />
+      <path d="m10 9.5 5.5 2.5L10 14.5z" />
     </>
   ),
   check: <path d="m5 12 5 5L20 7" />,

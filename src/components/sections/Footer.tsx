@@ -11,6 +11,7 @@ const tgHref = contacts.telegram.startsWith("http")
 const founderSocial = [
   { name: "instagram" as const, href: founder.social.instagram, label: `Instagram ${founder.social.instagramDisplay}`, color: "text-violet" },
   { name: "youtube" as const, href: founder.social.youtube, label: `YouTube ${founder.social.youtubeDisplay}`, color: "text-cyan" },
+  { name: "rutube" as const, href: founder.social.rutube, label: founder.social.rutubeDisplay, color: "text-violet" },
   { name: "telegram" as const, href: founder.social.telegram, label: `Telegram ${founder.social.telegramDisplay}`, color: "text-lime" },
 ];
 

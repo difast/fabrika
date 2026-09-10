@@ -66,6 +66,9 @@ export const founder = {
     youtubeDisplay: "@pyatakov.official",
     telegram: "https://t.me/pyatakov_official",
     telegramDisplay: "@pyatakov_official",
+    // У канала на RuTube нет юзернейма — только числовой id, поэтому подпись без «@».
+    rutube: "https://rutube.ru/channel/81140376/",
+    rutubeDisplay: "RuTube",
   },
 };
 
@@ -73,6 +76,7 @@ export const founder = {
 export const founderSameAs = [
   founder.social.instagram,
   founder.social.youtube,
+  founder.social.rutube,
   founder.social.telegram,
 ];
 
