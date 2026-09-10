@@ -92,7 +92,7 @@ export const projects = [
   {
     name: "ТехФабрика",
     nameEn: "TechFabrika",
-    url: "https://techfabrika.ru",
+    url: "https://tech-fabrika.ru",
     type: "EducationalOrganization" as const,
     tagline: "Онлайн-школа программирования",
     description:
@@ -122,7 +122,7 @@ export const site = {
   name: "ТехФабрика",
   legalName: 'ООО «ИНТЕГРО»',
   /** Домен без завершающего слэша. Используется для canonical / OG / sitemap */
-  url: "https://techfabrika.ru",
+  url: "https://tech-fabrika.ru",
   tagline: "Онлайн-школа программирования для детей и школьников",
   description:
     "ТехФабрика — онлайн-школа программирования для детей и школьников. Индивидуальные занятия: создание игр, сайтов, Python и реальные IT-проекты под руководством преподавателя. Запишитесь на бесплатную консультацию.",
