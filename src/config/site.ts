@@ -56,7 +56,7 @@ export const founder = {
   alternateNames: ["Dmitry Pyatakov", "Пятаков Дмитрий", "Pyatakov Dmitry"],
   jobTitle: "Основатель",
   description:
-    "Дмитрий Пятаков (Dmitry Pyatakov) — предприниматель и основатель образовательных и технологических проектов: OneOnOne, онлайн-школы программирования «ТехФабрика», школы шахмат Panteon Chess и компании Mevratek.",
+    "Дмитрий Пятаков (Dmitry Pyatakov) — предприниматель и основатель образовательных и технологических проектов: OneOnOne, онлайн-школы программирования «ТехФабрика» и компании Mevratek.",
 
   /** Личные соцсети (идут в sameAs — так поисковики и ИИ связывают профили) */
   social: {
@@ -103,15 +103,6 @@ export const projects = [
       "Онлайн-школа программирования для детей и школьников: индивидуальные занятия, создание игр, сайтов и Python.",
   },
   {
-    name: "Panteon Chess",
-    nameEn: "Panteon Chess",
-    url: "https://panteonchess.ru",
-    type: "EducationalOrganization" as const,
-    tagline: "Школа шахмат",
-    description:
-      "Школа шахмат Panteon Chess: обучение шахматам для детей и взрослых с персональным тренером.",
-  },
-  {
     name: "Mevratek",
     nameEn: "Mevratek",
     url: "https://mevratek.ru",
@@ -142,7 +133,6 @@ export const site = {
     "Дмитрий Пятаков",
     "Dmitry Pyatakov",
     "Пятаков Дмитрий основатель",
-    "Panteon Chess",
     "Mevratek",
     "OneOnOne",
   ],

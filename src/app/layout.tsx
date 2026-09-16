@@ -107,7 +107,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         knowsAbout: [
           "Программирование для детей",
           "Онлайн-образование",
-          "Обучение шахматам",
           "Технологические продукты",
         ],
       },
